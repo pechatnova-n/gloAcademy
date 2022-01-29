@@ -1,14 +1,10 @@
-let title, screens, screenPrice, rollback, fullPrice, adaptive;
 
-alert("Alert из lesson 1");
-console.log("Сообщение из lesson1");
-
-title = "GLO";
-screens = "Простые, Сложные, Интерактивные";
-screenPrice = 200;
-rollback = 18;
-fullPrice = 80000;
-adaptive = false;
+const title = "GLO";
+const screens = "Простые, Сложные, Интерактивные";
+const screenPrice = 200;
+const rollback = 18;
+const fullPrice = 80000;
+const adaptive = false;
 
 console.log(typeof title);
 console.log(typeof fullPrice);
@@ -18,4 +14,4 @@ console.log("Стоимость верстки экранов " + screenPrice + 
 console.log("Стоимость разработки сайта " + fullPrice + " рублей");
 
 console.log(screens.toLowerCase().split(", "));
-console.log(fullPrice * (rollback/100));
+console.log(fullPrice * (rollback / 100));
