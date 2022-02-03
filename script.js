@@ -18,11 +18,11 @@ const isNumber = function (num) {
 const asking = function () {
     title = prompt("Как называется ваш проект?", "Калькулятор верстки");
     screens = prompt("Какие типы экранов нужно разработать?", "Простые, Сложные, Интерактивные");
-    screenPrice = +prompt("Сколько будет стоить данная работа?");
 
-    while(!isNumber(screenPrice)) {
+    do {
         screenPrice = prompt("Сколько будет стоить данная работа?");
-    }
+        screenPrice = Number(screenPrice);
+    } while(!isNumber(screenPrice))
 
     adaptive = confirm("Нужен ли адаптив на сайте?");
 }
@@ -38,7 +38,18 @@ const getAllServicePrices = function() {
             service2 = prompt("Какой дополнительный тип услуги нужен?");
         }
 
-        sum += prompt("Сколько это будет стоить?");
+        //sum += isNumber(prompt("Сколько это будет стоить?"));
+        let price = prompt("Сколько это будет стоить?");
+        price = Number(price);
+
+        if(isNumber(price)) {
+            sum += price;
+        } else {
+            price = prompt("Сколько это будет стоить?");
+            price = Number(price);
+            sum += price;
+        }
+
     }
 
     return sum;
@@ -83,6 +94,17 @@ title = getTitle();
 showTypeOf(title);
 showTypeOf(fullPrice);
 showTypeOf(adaptive);
+
+console.log("title", typeof title, title);
+console.log("screens", typeof screens, screens);
+console.log("screenPrice", typeof screenPrice, screenPrice);
+console.log("adaptive", typeof adaptive, adaptive);
+console.log("service1", typeof service1, service1);
+console.log("service2", typeof service2, service2);
+console.log("allServicePrices", typeof allServicePrices, allServicePrices);
+console.log("fullPrice", typeof fullPrice, fullPrice);
+console.log("servicePercentPrice", typeof servicePercentPrice, servicePercentPrice);
+console.log("rollback", typeof rollback, rollback);
 
 
 
