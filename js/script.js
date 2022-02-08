@@ -1,13 +1,18 @@
 'use strict'
 
 const titlePage = document.getElementsByTagName('h1')[0];
-const buttons = document.getElementsByClassName('handler_btn');
+const startBtn = document.getElementsByClassName('handler_btn')[0];
+const resetBtn = document.getElementsByClassName('handler_btn')[1];
 const addBtn = document.querySelector('.screen-btn');
 const percent = document.querySelectorAll('.other-items.percent');
 const number = document.querySelectorAll('.other-items.number');
 const rollback = document.querySelector('.rollback input[type = "range"]');
 const rangValue = document.querySelector('.rollback span.range-value');
-const inputs = Array.from(document.getElementsByClassName('total-input'));
+const input1 = document.getElementsByClassName('total-input')[0];
+const input2 = document.getElementsByClassName('total-input')[1];
+const input3 = document.getElementsByClassName('total-input')[2];
+const input4 = document.getElementsByClassName('total-input')[3];
+const input5 = document.getElementsByClassName('total-input')[4];
 let screen  = document.querySelectorAll ('.screen');
 
 const appData = {
@@ -121,13 +126,18 @@ const appData = {
 appData.start();
 
 console.log(titlePage);
-console.log(buttons);
+console.log(startBtn);
+console.log(resetBtn);
 console.log(addBtn);
 console.log(percent);
 console.log(number);
 console.log(rollback);
 console.log(rangValue);
-console.log(inputs);
+console.log(input1);
+console.log(input2);
+console.log(input3);
+console.log(input4);
+console.log(input5);
 console.log(screen);
 
 
