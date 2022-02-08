@@ -1,5 +1,15 @@
 'use strict'
 
+const titlePage = document.getElementsByTagName('h1')[0];
+const buttons = document.getElementsByClassName('handler_btn');
+const addBtn = document.querySelector('.screen-btn');
+const percent = document.querySelectorAll('.other-items.percent');
+const number = document.querySelectorAll('.other-items.number');
+const rollback = document.querySelector('.rollback input[type = "range"]');
+const rangValue = document.querySelector('.rollback span.range-value');
+const inputs = Array.from(document.getElementsByClassName('total-input'));
+let screen  = document.querySelectorAll ('.screen');
+
 const appData = {
     title: '',
     screens: [],
@@ -109,6 +119,16 @@ const appData = {
 }
 
 appData.start();
+
+console.log(titlePage);
+console.log(buttons);
+console.log(addBtn);
+console.log(percent);
+console.log(number);
+console.log(rollback);
+console.log(rangValue);
+console.log(inputs);
+console.log(screen);
 
 
 
