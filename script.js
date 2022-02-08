@@ -19,30 +19,47 @@ const appData = {
         appData.logger()
     },
     asking: function () {
-        appData.title = prompt("Как называется ваш проект?", "Калькулятор верстки");
+
+        do {
+            appData.title = prompt("Как называется ваш проект?", "Калькулятор верстки");
+        } while (typeof(appData.title) != 'string' || appData.isNumber(appData.title));
 
         for (let i = 0; i < 2; i++) {
-            let name = prompt("Какие типы экранов нужно разработать?");
+            let name;
+            do {
+                name = prompt("Какие типы экранов нужно разработать?");
+            } while (typeof(name) != 'string' || appData.isNumber(name));
             let price = 0;
 
             do {
                 price = prompt("Сколько будет стоить данная работа?");
+                price = Number(price);
             } while(!appData.isNumber(price));
 
             appData.screens.push({ id: i, name: name, price: price });
+
+            console.log('Как называется ваш проект?', typeof appData.title);
+            console.log('Какие типы экранов нужно разработать?', typeof name);
+            console.log('Сколько будет стоить данная работа?', typeof price);
         }
 
-
-
         for (let i = 0; i < 2; i++) {
-            let name = prompt("Какой дополнительный тип услуги нужен?");
+            let name;
             let price = 0;
 
             do {
+                name = prompt("Какой дополнительный тип услуги нужен?");
+            } while (typeof(name) != 'string' || appData.isNumber(name));
+
+            do {
                 price = prompt("Сколько это будет стоить?");
+                price = Number(price);
             } while (!appData.isNumber(price));
 
             appData.services[name] = +price;
+
+            console.log('Какой дополнительный тип услуги нужен?', typeof name);
+            console.log('Сколько это будет стоить?', typeof price);
         }
 
         appData.adaptive = confirm("Нужен ли адаптив на сайте?");
