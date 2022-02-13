@@ -106,7 +106,6 @@ const appData = {
         }
 
         appData.screens.forEach(function (item) {
-            console.log(item)
             appData.allCount += +item.count;
         })
 
