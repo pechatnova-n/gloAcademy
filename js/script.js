@@ -71,6 +71,7 @@ const appData = {
     },
     addScreenBlock: function () {
         const cloneScreen = screens[0].cloneNode(true)
+        screens  = document.querySelectorAll ('.screen');
         screens[screens.length - 1].after(cloneScreen)
     },
     addServices: function () {
@@ -151,9 +152,7 @@ const appData = {
         this.logger()
     },
     reset: function () {
-        //screens  = document.querySelectorAll ('.screen');
-
-        screens.forEach(screen => {
+            screens.forEach(screen => {
             let sel = screen.querySelector('select');
             sel.removeAttribute('disabled');
             sel.value = '';
@@ -163,9 +162,9 @@ const appData = {
             inp.value = '';
         })
 
-        console.log(screens)
-
-
+        for(let i = 1; i< screens.length; i++) {
+            screens[i].remove();
+        }
 
         checkboxes.forEach(item => {
             let check = item.querySelector('input[type="checkbox"]');
@@ -176,8 +175,6 @@ const appData = {
         buttonPlus.removeAttribute('disabled');
         startBtn.style.display = "block";
         resetBtn.style.display = "none";
-
-
     },
     logger: function () {
         //console.log(screens);
