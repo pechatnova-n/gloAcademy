@@ -113,7 +113,7 @@ const appData = {
 
         this.fullPrice = +this.screenPrice + this.servicePricesNumber + this.servicePricesPercent;
 
-        appData.servicePercentPrice = +this.fullPrice - (this.fullPrice * (this.rollback / 100));
+        this.servicePercentPrice = +this.fullPrice - (this.fullPrice * (this.rollback / 100));
         totalCountRollback.value = this.servicePercentPrice;
     },
     showResult: function () {
@@ -171,6 +171,14 @@ const appData = {
             check.removeAttribute('disabled');
             check.checked = false;
         })
+
+        total.value = 0;
+        totalCount.value = 0;
+        totalCountOther.value = 0;
+        fullTotalCount.value = 0;
+        totalCountRollback.value = 0;
+
+
 
         buttonPlus.removeAttribute('disabled');
         startBtn.style.display = "block";
