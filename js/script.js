@@ -17,6 +17,10 @@ const totalCountRollback = document.getElementsByClassName('total-input')[4];
 
 const cms = document.querySelector('#cms-open');
 const cmsVariants = document.querySelector('.hidden-cms-variants');
+let selectSmc = cmsVariants.querySelector('select');
+let hiddenVariants = document.querySelector('.hidden-cms-variants > .main-controls__input');
+let inpCms;
+
 
 let checkboxes = document.querySelectorAll('.main-controls__checkbox');
 let screens  = document.querySelectorAll ('.screen');
@@ -34,13 +38,12 @@ const appData = {
     servicePercentPrice: 0,
     allCount: 0,
     rollback: 10,
+    extraPercent: 1,
     init: function () {
         this.addTitle()
         startBtn.addEventListener('click', this.allCountScreens.bind(this))
 
-
-
-        //startBtn.addEventListener('click', this.inputsDisabled.bind(this))
+        startBtn.addEventListener('click', this.inputsDisabled.bind(this))
         resetBtn.addEventListener('click', this.reset.bind(this))
         buttonPlus.addEventListener('click', this.addScreenBlock.bind(this))
         inputRange.addEventListener('change', this.addRollback.bind(this))
@@ -59,7 +62,6 @@ const appData = {
     },
     addScreens: function () {
         screens  = document.querySelectorAll ('.screen');
-        console.log(screens)
 
         screens.forEach((screen, index) => {
             const select = screen.querySelector('select');
@@ -109,12 +111,7 @@ const appData = {
     },
     addPrices: function () {
         for (let screen of this.screens) {
-
             this.screenPrice += +screen.price;
-
-           /* console.log(this.screenPrice)
-            console.log(screen.price)
-            console.log(this.screens)*/
         }
 
         for (let key in this.servicesNumber) {
@@ -129,8 +126,15 @@ const appData = {
 
         this.fullPrice = +this.screenPrice + this.servicePricesNumber + this.servicePricesPercent;
 
-        appData.servicePercentPrice = +this.fullPrice - (this.fullPrice * (this.rollback / 100));
+
+        this.fullPrice = this.fullPrice + +(this.fullPrice / 100) * this.extraPercent;
+
+
+
+        this.servicePercentPrice = +this.fullPrice - (this.fullPrice * (this.rollback / 100));
         totalCountRollback.value = this.servicePercentPrice;
+
+        console.log(this.extraPercent)
     },
     showResult: function () {
         total.value = this.screenPrice
@@ -154,6 +158,11 @@ const appData = {
             item.querySelector('input[type="checkbox"]').setAttribute('disabled', true);
         })
 
+        selectSmc.setAttribute('disabled', true);
+
+        inpCms.setAttribute('disabled', true);
+
+
         buttonPlus.setAttribute('disabled', true);
 
         startBtn.style.display = "none";
@@ -164,21 +173,34 @@ const appData = {
 
     openCmsVariants: function () {
         cmsVariants.style.display = 'flex';
-        let selectSmc = cmsVariants.querySelector('select');
-        let hiddenVariants = document.querySelector('.hidden-cms-variants > .main-controls__input')
+        selectSmc.disabled = false;
+        selectSmc.selectedIndex = 0;
 
-      /*  selectSmc.addEventListener('change', () => {
+
+
+        selectSmc.addEventListener('change', () => {
+            let inpCms;
+            let cmsOther;
+            let valSelectSmc;
+            inpCms = hiddenVariants.querySelector('input');
+            //inpCms = querySelector('#cms-other-input');
+
             hiddenVariants.style.display = 'none';
+            inpCms.value = '';
+
             if(selectSmc.options[selectSmc.selectedIndex].value == 'other') {
                 hiddenVariants.style.display = 'flex';
+                //inpCms.style.display = 'block';
+                //inpCms = hiddenVariants.querySelector('input[type="text"]')
+                inpCms.addEventListener('change', () => {
+                    cmsOther = inpCms.value;
+                    this.extraPercent = +cmsOther;
+                })
             } else  if(selectSmc.options[selectSmc.selectedIndex].value != '' && selectSmc.options[selectSmc.selectedIndex].value != 'other') {
-                let val = selectSmc.options[selectSmc.selectedIndex].value;
-
-                this.fullPrice = this.fullPrice + +(this.fullPrice / 100) * val;
-
-                console.log(val)
+                valSelectSmc = selectSmc.options[selectSmc.selectedIndex].value;
+                this.extraPercent = +valSelectSmc;
             }
-        })*/
+        })
     },
 
 
@@ -213,9 +235,18 @@ const appData = {
             check.checked = false;
         })
 
+
+
+        total.value = 0;
+        totalCount.value = 0;
+        totalCountOther.value = 0;
+        fullTotalCount.value = 0;
+        totalCountRollback.value = 0;
+
         buttonPlus.removeAttribute('disabled');
         startBtn.style.display = "block";
         resetBtn.style.display = "none";
+        cmsVariants.style.display = 'none';
     },
     logger: function () {
         //console.log(screens);
