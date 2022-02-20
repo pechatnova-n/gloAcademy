@@ -15,14 +15,13 @@ const totalCountOther = document.getElementsByClassName('total-input')[2];
 const fullTotalCount = document.getElementsByClassName('total-input')[3];
 const totalCountRollback = document.getElementsByClassName('total-input')[4];
 
-const cms = document.querySelector('#cms-open');
+const checkboxCms = document.querySelector('#cms-open');
 const cmsVariants = document.querySelector('.hidden-cms-variants');
-let selectSmc = cmsVariants.querySelector('select');
-let hiddenVariants = document.querySelector('.hidden-cms-variants > .main-controls__input');
-let inpCms;
+const selectSmc = cmsVariants.querySelector('select');
+const dopCmsPers = document.querySelector('.hidden-cms-variants > .main-controls__input');
+const inpCms = document.querySelector('#cms-other-input');
 
-
-let checkboxes = document.querySelectorAll('.main-controls__checkbox');
+const checkboxes = document.querySelectorAll('.main-controls__checkbox');
 let screens  = document.querySelectorAll ('.screen');
 
 const appData = {
@@ -48,32 +47,31 @@ const appData = {
         buttonPlus.addEventListener('click', this.addScreenBlock.bind(this))
         inputRange.addEventListener('change', this.addRollback.bind(this))
 
-        cms.addEventListener('click', this.openCmsVariants.bind(this))
+        checkboxCms.addEventListener('click', this.openCmsVariants.bind(this))
     },
     addTitle: function () {
         document.title = title.textContent;
     },
     allCountScreens: function () {
         if(this.addScreens() !== true) {
-            alert('Не выбран тип или количество экранов')
+            alert('Не выбран тип или количество экранов');
         } else {
             this.start();
         }
     },
     addScreens: function () {
-        screens  = document.querySelectorAll ('.screen');
-
         screens.forEach((screen, index) => {
             const select = screen.querySelector('select');
             const input = screen.querySelector('input');
             const selectName = select.options[select.selectedIndex].textContent;
 
-            this.screens.push({
+            appData.screens.push({
                 id: index,
                 name: selectName,
                 count: +input.value,
                 price: +select.value * +input.value
             })
+            console.log(this.screens);
         })
 
         if (this.screens.find(item => item.price === 0)) {
@@ -125,16 +123,11 @@ const appData = {
         this.screens.forEach( item =>  this.allCount += +item.count);
 
         this.fullPrice = +this.screenPrice + this.servicePricesNumber + this.servicePricesPercent;
-
-
         this.fullPrice = this.fullPrice + +(this.fullPrice / 100) * this.extraPercent;
-
-
 
         this.servicePercentPrice = +this.fullPrice - (this.fullPrice * (this.rollback / 100));
         totalCountRollback.value = this.servicePercentPrice;
 
-        console.log(this.extraPercent)
     },
     showResult: function () {
         total.value = this.screenPrice
@@ -168,44 +161,27 @@ const appData = {
         startBtn.style.display = "none";
         resetBtn.style.display = "block";
     },
-
-
-
     openCmsVariants: function () {
         cmsVariants.style.display = 'flex';
         selectSmc.disabled = false;
         selectSmc.selectedIndex = 0;
 
-
-
         selectSmc.addEventListener('change', () => {
-            let inpCms;
-            let cmsOther;
-            let valSelectSmc;
-            inpCms = hiddenVariants.querySelector('input');
-            //inpCms = querySelector('#cms-other-input');
-
-            hiddenVariants.style.display = 'none';
+            dopCmsPers.style.display = 'none';
             inpCms.value = '';
 
             if(selectSmc.options[selectSmc.selectedIndex].value == 'other') {
-                hiddenVariants.style.display = 'flex';
-                //inpCms.style.display = 'block';
-                //inpCms = hiddenVariants.querySelector('input[type="text"]')
+                dopCmsPers.style.display = 'flex';
+
                 inpCms.addEventListener('change', () => {
-                    cmsOther = inpCms.value;
-                    this.extraPercent = +cmsOther;
+                    this.extraPercent = +inpCms.value;
                 })
             } else  if(selectSmc.options[selectSmc.selectedIndex].value != '' && selectSmc.options[selectSmc.selectedIndex].value != 'other') {
-                valSelectSmc = selectSmc.options[selectSmc.selectedIndex].value;
-                this.extraPercent = +valSelectSmc;
+                this.extraPercent = +selectSmc.options[selectSmc.selectedIndex].value;
+                console.log(this.extraPercent)
             }
         })
     },
-
-
-
-
     start: function () {
         this.addScreens()
         this.addServices()
@@ -243,13 +219,17 @@ const appData = {
         fullTotalCount.value = 0;
         totalCountRollback.value = 0;
 
+        inpCms.removeAttribute('disabled');
+        dopCmsPers.style.display = 'none';
+
+
         buttonPlus.removeAttribute('disabled');
         startBtn.style.display = "block";
         resetBtn.style.display = "none";
         cmsVariants.style.display = 'none';
     },
     logger: function () {
-        //console.log(screens);
+        //console.log(this.screens.price);
     }
 }
 
