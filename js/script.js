@@ -22,7 +22,9 @@ const dopCmsPers = document.querySelector('.hidden-cms-variants > .main-controls
 const inpCms = document.querySelector('#cms-other-input');
 
 const checkboxes = document.querySelectorAll('.main-controls__checkbox');
-let screens  = document.querySelectorAll ('.screen');
+let screens  = document.querySelectorAll('.screen');
+
+
 
 const appData = {
     title: '',
@@ -40,13 +42,11 @@ const appData = {
     extraPercent: 1,
     init: function () {
         this.addTitle()
+        buttonPlus.addEventListener('click', this.addScreenBlock.bind(this))
         startBtn.addEventListener('click', this.allCountScreens.bind(this))
-
         startBtn.addEventListener('click', this.inputsDisabled.bind(this))
         resetBtn.addEventListener('click', this.reset.bind(this))
-        buttonPlus.addEventListener('click', this.addScreenBlock.bind(this))
         inputRange.addEventListener('change', this.addRollback.bind(this))
-
         checkboxCms.addEventListener('click', this.openCmsVariants.bind(this))
     },
     addTitle: function () {
@@ -60,19 +60,20 @@ const appData = {
         }
     },
     addScreens: function () {
+        screens  = document.querySelectorAll('.screen');
         screens.forEach((screen, index) => {
             const select = screen.querySelector('select');
             const input = screen.querySelector('input');
             const selectName = select.options[select.selectedIndex].textContent;
 
-            appData.screens.push({
+            this.screens.push({
                 id: index,
                 name: selectName,
                 count: +input.value,
                 price: +select.value * +input.value
             })
-            console.log(this.screens);
         })
+
 
         if (this.screens.find(item => item.price === 0)) {
             return false;
@@ -81,9 +82,9 @@ const appData = {
         }
     },
     addScreenBlock: function () {
-        const cloneScreen = screens[0].cloneNode(true)
-        screens  = document.querySelectorAll ('.screen');
-        screens[screens.length - 1].after(cloneScreen)
+        const cloneScreen = screens[0].cloneNode(true);
+        screens  = document.querySelectorAll('.screen');
+        screens[screens.length - 1].after(cloneScreen);
     },
     addServices: function () {
         otherItemsPercent.forEach(item => {
@@ -141,7 +142,6 @@ const appData = {
     },
     inputsDisabled: function() {
         screens  = document.querySelectorAll ('.screen');
-
         screens.forEach(screen => {
             screen.querySelector('select').setAttribute('disabled', true);
             screen.querySelector('input').setAttribute('disabled', true);
@@ -187,7 +187,6 @@ const appData = {
         this.addServices()
         this.addPrices()
         this.showResult()
-        startBtn.addEventListener('click', this.inputsDisabled.bind(this))
         this.logger()
     },
     reset: function () {
