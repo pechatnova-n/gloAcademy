@@ -49,7 +49,7 @@ const appData = {
         })
         resetBtn.addEventListener('click', this.reset.bind(this))
         checkboxCms.addEventListener('click', this.openCmsVariants.bind(this))
-        inputRange.addEventListener('change', () => {
+        inputRange.addEventListener('input', () => {
             this.addRollback()
             if (startBtn.style.display === "none") {
                 this.addRollback()
@@ -236,6 +236,9 @@ const appData = {
         startBtn.style.display = "block";
         resetBtn.style.display = "none";
         cmsVariants.style.display = 'none';
+
+        inputRange.value = ''
+        rangValue.textContent = '0%'
     },
     logger: function () {
         //console.log(this.screens.price);
