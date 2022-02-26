@@ -43,11 +43,21 @@ const appData = {
     init: function () {
         this.addTitle()
         buttonPlus.addEventListener('click', this.addScreenBlock.bind(this))
-        startBtn.addEventListener('click', this.allCountScreens.bind(this))
-        startBtn.addEventListener('click', this.inputsDisabled.bind(this))
+        startBtn.addEventListener('click', () => {
+            this.allCountScreens()
+            this.inputsDisabled()
+        })
         resetBtn.addEventListener('click', this.reset.bind(this))
-        inputRange.addEventListener('change', this.addRollback.bind(this))
         checkboxCms.addEventListener('click', this.openCmsVariants.bind(this))
+        inputRange.addEventListener('change', () => {
+            this.addRollback()
+            if (startBtn.style.display === "none") {
+                this.addRollback()
+                this.servicePercentPrice = +this.fullPrice - (this.fullPrice * (this.rollback / 100));
+                totalCountRollback.value = this.servicePercentPrice;
+            }
+        })
+
     },
     addTitle: function () {
         document.title = title.textContent;
